@@ -1,0 +1,19 @@
+server {
+    listen 4433 ssl;
+    server_name up.fxl.us.kg;
+
+    ssl_certificate /etc/letsencrypt/live/up.fxl.us.kg/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/up.fxl.us.kg/privkey.pem;
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers 'TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA384';
+    ssl_prefer_server_ciphers on;
+
+    location / {
+        proxy_pass http://localhost:3001;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        client_max_body_size 0;
+    }
+}
