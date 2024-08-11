@@ -1,0 +1,11 @@
+server {
+    listen 8080;
+    server_name up.fxl.us.kg;
+
+    root /root/up.fxl.us.kg;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}
